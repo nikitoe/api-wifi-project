@@ -1,4 +1,13 @@
-# api-wifi-project
-
 # 설명
-공공데이터 API를 이용하여, 지정한 위치에서 가까운 wifi 정보를 얻어오는 프로젝트
+내 위치 기반 공공 와이파이 정보를 제공하는 웹서비스 개발
+
+# 사용
+- OpneAPI(wifi)
+- Java(JDK 1.8)
+- SQLite
+- Eclipse
+- Tomcat v9.0
+
+# 라이브러리
+- gson
+- sqlite-jdbc
