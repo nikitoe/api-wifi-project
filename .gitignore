@@ -72,5 +72,6 @@ local.properties
 
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
+/target/
 
 # End of https://www.toptal.com/developers/gitignore/api/eclipse
