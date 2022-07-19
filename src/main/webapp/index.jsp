@@ -40,9 +40,17 @@ li {
 .navbar__menu__item{
 	padding-right: 5px;
 }
-#to-insert{
-	padding: 15px 0px;
+#navbar {
+	padding: 10px 0px;
 }
+#to-insert{
+	padding: 10px 0px;
+}
+
+#show-table{
+	padding: 5px 0px;
+}
+
 
 td#initial-value{
 	font-size : 13px;
