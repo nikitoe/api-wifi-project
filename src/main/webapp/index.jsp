@@ -1,3 +1,6 @@
+<%@page import="dao.SqliteDb"%>
+<%@page import="dto.PublicWifiInfo"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -59,6 +62,9 @@ td#initial-value{
 </style>
 </head>
 <body>
+	<%
+		SqliteDb sqliteDb = new SqliteDb();
+	%>
 	<h1>와이파이 정보 구하기</h1>
 	
 	<nav id="navbar">
@@ -108,9 +114,38 @@ td#initial-value{
     			</tr>
     		</thead>
     		<tbody>
+    		<%if(!(sqliteDb.isSearchYn())){ %>
 				<tr>
 					<td id="initial-value" colspan='17'>위치 정보를 입력한 후에 조회해 주세요.</td>
 				</tr>
+			<%} %>
+<%-- 			<%
+			if(sqliteDb.isSearchYn()){
+			for (PublicWifiInfo wifiInfo : pwiList){
+			%>
+					<tr>
+						<td> <%=wifiInfo.getDistance()%> </td>
+						<td> <%=wifiInfo.getMgr_no()%> </td>
+						<td> <%=wifiInfo.getWrdofc()%> </td>
+						<td> <%=wifiInfo.getMain_nm()%> </td>
+						<td> <%=wifiInfo.getAdres1()%> </td>
+						<td> <%=wifiInfo.getAdres2()%> </td>
+						<td> <%=wifiInfo.getInstl_floor()%> </td>
+						<td> <%=wifiInfo.getInstl_ty()%> </td>
+						<td> <%=wifiInfo.getInstl_mby()%> </td>
+						<td> <%=wifiInfo.getSvc_se()%> </td>
+						<td> <%=wifiInfo.getCmcwr()%> </td>
+						<td> <%=wifiInfo.getCnstc_year()%> </td>
+						<td> <%=wifiInfo.getInout_door()%> </td>
+						<td> <%=wifiInfo.getRemars3()%> </td>
+						<td> <%=wifiInfo.getLnt()%> </td>
+						<td> <%=wifiInfo.getLnt()%> </td>
+						<td> <%=wifiInfo.getWork_dttm()%> </td>
+					</tr>		
+			<%		
+				}
+			}
+			%> --%>
     		</tbody>
     	</table>
 	</section>
