@@ -21,7 +21,7 @@
 	%>
 	<div id="get-information">
 		<!-- openAPI에서 전체 데이터 개수 가져오기 -->
-		<h1><%out.println(totalCnt); %>개의 WIFI 정보를 정상적으로 저장하였습니다.</h1>
+		<h1><%= totalCnt %>개의 WIFI 정보를 정상적으로 저장하였습니다.</h1>
 			
 		<a href="/">홈 으로 가기</a>
 	</div>

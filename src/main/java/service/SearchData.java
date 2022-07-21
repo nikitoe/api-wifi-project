@@ -27,12 +27,7 @@ public class SearchData {
 		
 		// 데이터베이스에서 모든 와이파이정보 출력
 		pwiList = sqltieDb.selectDb();
-		
-		System.out.println("현재 위도:  " + lat);
-		System.out.println("현재 경도:  " + lnt);
-		System.out.println("해당 위도:  " + pwiList.get(0).getLat());
-		System.out.println("해당 경도:  " + pwiList.get(0).getLnt());
-		
+				
 		for (int i = 0; i < pwiList.size(); i++) {
 			double theta = pwiList.get(i).getLnt() - lnt;
 	        double dist = Math.sin(deg2rad(pwiList.get(i).getLat())) * Math.sin(deg2rad(lat)) + Math.cos(deg2rad(pwiList.get(i).getLat())) * Math.cos(deg2rad(lat)) * Math.cos(deg2rad(theta));

@@ -16,6 +16,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import dto.PublicWifiInfo;
+import dto.UserHistory;
+import service.HistoryPage;
 
 public class SqliteDb {
 	
@@ -167,6 +169,7 @@ public class SqliteDb {
 		
 		String start;	// 요청시작위치
 		String end;	// 요청종료위치
+		createDbHistory();
 		createDb();
 		try {
 			for (int i = 0; i <= divideCount; i++) {
@@ -197,7 +200,7 @@ public class SqliteDb {
 	}
 	
 	/**
-	 * 해당 데이터 정보들을 데이터베이스에 삽입
+	 * TB_PUBLIC_WIFI_INFO 테이블에 삽입
 	 */
 	public void insertDb() {
 		
@@ -299,7 +302,7 @@ public class SqliteDb {
 	}
 	
 	/**
-	 * 해당 데이터 정보들을 담을 데이터베이스 생성
+	 * TB_PUBLIC_WIFI_INFO 테이블 생성
 	 */
 	public void createDb() {
 		Connection connection = null;
@@ -480,4 +483,145 @@ public class SqliteDb {
 		}
 		return PublicWifiInfoList;
 	}
+	
+	/**
+	 * TB_USER_HISTORY 테이블 생성
+	 */
+	public void createDbHistory() {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+
+		String urlDb = "jdbc:sqlite:public_wifi.db";
+
+		try {
+			Class.forName("org.sqlite.JDBC");
+		} catch (ClassNotFoundException e) {
+			System.out.println(e.getMessage());
+		}
+
+		try {
+			
+			connection = DriverManager.getConnection(urlDb);
+			System.out.println("SQLite DB connected(create database)");
+
+			String sql = " CREATE TABLE IF NOT EXISTS TB_USER_HISTORY "
+					+ " ( "
+					+ " ID				INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL "
+					+ " ,LAT			REAL    NULL "
+					+ " ,LNT			REAL    NULL "   
+					+ " ,SEARCH_DTTM	TEXT    NULL  DEFAULT CURRENT_TIMESTAMP" 
+					+ " ); ";
+
+				preparedStatement = connection.prepareStatement(sql);
+				preparedStatement.executeUpdate();
+				Thread.sleep(500);
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				if (rs != null && !rs.isClosed()) {
+					rs.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+			try {
+				if (preparedStatement != null && !preparedStatement.isClosed()) {
+					preparedStatement.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+			try {
+				if (connection != null && !connection.isClosed()) {
+					connection.isClosed();
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
+		}
+	}
+	
+	/**
+	 * TB_USER_HISTORY 테이블에 삽입
+	 * 
+	 * @param lat 위도
+	 * @param lnt 경도
+	 */
+	public void InsertDbHistory(double lat, double lnt) {
+		
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+		String url = "jdbc:sqlite:public_wifi.db";
+
+		try {
+			Class.forName("org.sqlite.JDBC");
+		} catch (ClassNotFoundException e) {
+			System.out.println(e.getMessage());
+		}
+
+		try {
+			connection = DriverManager.getConnection(url);
+			System.out.println("SQLite DB connected");
+			
+				UserHistory userHistory = new UserHistory();
+				
+				userHistory.setLat(lat);
+				userHistory.setLnt(lnt);
+
+				String sql = " INSERT INTO TB_USER_HISTORY " 
+						+ " ( LAT , LNT )"
+						+ " VALUES " 
+						+ " ( ?, ? ); ";
+
+				preparedStatement = connection.prepareStatement(sql);
+				preparedStatement.setDouble(1, lat);
+				preparedStatement.setDouble(2, lnt);
+				int affected = preparedStatement.executeUpdate();
+
+	            if (affected > 0) {
+	                System.out.println("성공");
+	            } else {
+	                System.out.println("실패");
+	            }
+
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				if (rs != null && !rs.isClosed()) {
+					rs.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+			try {
+				if (preparedStatement != null && !preparedStatement.isClosed()) {
+					preparedStatement.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+			try {
+				if (connection != null && !connection.isClosed()) {
+					connection.isClosed();
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
+		}
+	}
+
 }

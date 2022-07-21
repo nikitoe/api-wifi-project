@@ -1,3 +1,4 @@
+<%@page import="service.HistoryPage"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="service.SearchData"%>
 <%@page import="dao.SqliteDb"%>
@@ -67,11 +68,12 @@ td#initial-value{
 	<%
 		SqliteDb sqliteDb = new SqliteDb();
 		SearchData sd = new SearchData();
+		HistoryPage hp = new HistoryPage();
 		List<PublicWifiInfo> pwiList = new ArrayList<>();
 		double lat = Double.parseDouble(request.getParameter("lat"));
 		double lnt = Double.parseDouble(request.getParameter("lnt"));
 		pwiList = sd.calDistance(lat, lnt);
-		
+		hp.saveUserHistory(lat, lnt);
 	%>
 	<h1>와이파이 정보 구하기</h1>
 	
