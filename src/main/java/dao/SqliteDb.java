@@ -261,8 +261,8 @@ public class SqliteDb {
 				preparedStatement.setString(11,publicWifiInfo.getCnstc_year());
 				preparedStatement.setString(12,publicWifiInfo.getInout_door());
 				preparedStatement.setString(13,publicWifiInfo.getRemars3());
-				preparedStatement.setDouble(14,publicWifiInfo.getLat());
-				preparedStatement.setDouble(15,publicWifiInfo.getLnt());
+				preparedStatement.setDouble(14,publicWifiInfo.getLnt());
+				preparedStatement.setDouble(15,publicWifiInfo.getLat());
 				preparedStatement.setString(16,publicWifiInfo.getWork_dttm());
 				int affected = preparedStatement.executeUpdate();
 				cnt++;
@@ -375,5 +375,110 @@ public class SqliteDb {
 			}
 			
 		}
+	}
+	
+	/**
+	 * 해당 데이터 정보들을 담을 데이터베이스 생성
+	 */
+	public List<PublicWifiInfo> selectDb() {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+		
+
+		String urlDb = "jdbc:sqlite:public_wifi.db";
+
+		try {
+			Class.forName("org.sqlite.JDBC");
+		} catch (ClassNotFoundException e) {
+			System.out.println(e.getMessage());
+		}
+
+		try {
+			
+			connection = DriverManager.getConnection(urlDb);
+			System.out.println("SQLite DB connected(select database)");
+
+			String sql = " SELECT "
+					+ " DISTANCE "
+					+ " , X_SWIFI_MGR_NO "
+					+ " , X_SWIFI_WRDOFC "
+					+ " , X_SWIFI_MAIN_NM "
+					+ " , X_SWIFI_ADRES1 "
+					+ " , X_SWIFI_ADRES2 "
+					+ " , X_SWIFI_INSTL_FLOOR "
+					+ " , X_SWIFI_INSTL_TY "
+					+ " , X_SWIFI_INSTL_MBY "
+					+ " , X_SWIFI_SVC_SE "
+					+ " , X_SWIFI_CMCWR	 "
+					+ " , X_SWIFI_CNSTC_YEAR "
+					+ " , X_SWIFI_INOUT_DOOR "
+					+ " , X_SWIFI_REMARS3 "
+					+ " , LAT "
+					+ " , LNT "
+					+ " , WORK_DTTM	"
+					+ " FROM TB_PUBLIC_WIFI_INFO "
+					+ "; ";
+
+
+				preparedStatement = connection.prepareStatement(sql);
+				rs = preparedStatement.executeQuery();
+				
+				
+				while(rs.next()) {
+					
+					PublicWifiInfo publicWifiInfo = new PublicWifiInfo();
+					
+					publicWifiInfo.setDistance(rs.getDouble("DISTANCE"));
+					publicWifiInfo.setMgr_no(rs.getString("X_SWIFI_MGR_NO"));
+					publicWifiInfo.setWrdofc(rs.getString("X_SWIFI_WRDOFC"));
+					publicWifiInfo.setMain_nm(rs.getString("X_SWIFI_MAIN_NM"));
+					publicWifiInfo.setAdres1(rs.getString("X_SWIFI_ADRES1"));
+					publicWifiInfo.setAdres2(rs.getString("X_SWIFI_ADRES2"));
+					publicWifiInfo.setInstl_floor(rs.getString("X_SWIFI_INSTL_FLOOR"));
+					publicWifiInfo.setInstl_ty(rs.getString("X_SWIFI_INSTL_TY"));
+					publicWifiInfo.setInstl_mby(rs.getString("X_SWIFI_INSTL_MBY"));
+					publicWifiInfo.setSvc_se(rs.getString("X_SWIFI_SVC_SE"));
+					publicWifiInfo.setCmcwr(rs.getString("X_SWIFI_CMCWR"));
+					publicWifiInfo.setCnstc_year(rs.getString("X_SWIFI_CNSTC_YEAR"));
+					publicWifiInfo.setInout_door(rs.getString("X_SWIFI_INOUT_DOOR"));
+					publicWifiInfo.setRemars3(rs.getString("X_SWIFI_REMARS3"));
+					publicWifiInfo.setLat(rs.getDouble("LAT"));
+					publicWifiInfo.setLnt(rs.getDouble("LNT"));
+					publicWifiInfo.setWork_dttm(rs.getString("WORK_DTTM"));
+					
+					PublicWifiInfoList.add(publicWifiInfo);
+				}
+	
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				if (rs != null && !rs.isClosed()) {
+					rs.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+			try {
+				if (preparedStatement != null && !preparedStatement.isClosed()) {
+					preparedStatement.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+			try {
+				if (connection != null && !connection.isClosed()) {
+					connection.isClosed();
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
+		}
+		return PublicWifiInfoList;
 	}
 }
