@@ -63,13 +63,23 @@ td#initial-value{
 	font-weight: bold;
 }
 </style>
+<script>
+function hrefLink(id){
+	const link = 'history.jsp?id='+id;
+	
+	location.href = link;
 
+}
+</script>
 </head>
 <body>
 	<%
-		
 		HistoryPage hp = new HistoryPage();
 		List<UserHistory> userHistoryList = new ArrayList<>();
+		int id = Integer.parseInt(request.getParameter("id"));
+		if(id != -1){
+			hp.deleteUserHistory(id);
+		}
 		userHistoryList= hp.searchUserHistory();
 	%>
 	<h1>와이파이 정보 구하기</h1>
@@ -77,7 +87,7 @@ td#initial-value{
 	<nav id="navbar">
 		<ul class="navbar__menu">
 	 		<li class="navbar__menu__item"><a href="index.jsp">홈</a></li>
-	 		<li class="navbar__menu__item">| <a href="history.jsp">위치히스토리 목록</a></li>
+	 		<li class="navbar__menu__item">| <a href="history.jsp?id=-1">위치 히스토리 목록</a></li>
 	 		<li class="navbar__menu__item">| <a href="load-wifi.jsp">Open API 와이파이 정보가져오기</a></li>
 		</ul>
 	</nav>
@@ -95,7 +105,7 @@ td#initial-value{
     		</thead>
     		<tbody id="tbody-history-style">
     			<%
-    			if(!(hp.isSavedYn())) {
+    			if(!(hp.isSavedYn())||userHistoryList.size()==0) {
     			%>
     			
 				<tr>
@@ -112,7 +122,7 @@ td#initial-value{
 					<td class="td-history-style"><%=userHistoryList.get(i).getLat()%></td>
 					<td class="td-history-style"><%=userHistoryList.get(i).getLnt()%></td>
 					<td class="td-history-style"><%=userHistoryList.get(i).getSearchDttm()%></td>
-					<td><button onclick="hrefLink(<%=userHistoryList.get(i).getId()%>)">삭제</button></td>				
+					<td><button onclick="hrefLink(<%= userHistoryList.get(i).getId()%>)">삭제</button></td>				
 				</tr>
 				
 				<%

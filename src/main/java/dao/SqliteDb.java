@@ -14,10 +14,9 @@ import java.util.List;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-
 import dto.PublicWifiInfo;
 import dto.UserHistory;
-import service.HistoryPage;
+
 
 public class SqliteDb {
 	
@@ -549,12 +548,11 @@ public class SqliteDb {
 	}
 	
 	/**
-	 * TB_USER_HISTORY 테이블에 삽입
+	 * TB_USER_HISTORY 테이블에 데이터 삭제
 	 * 
-	 * @param lat 위도
-	 * @param lnt 경도
+	 * @param id TB_USER_HISTORY의 id 컬럼
 	 */
-	public void InsertDbHistory(double lat, double lnt) {
+	public void deleteDbHistory(int id) {
 		
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -570,20 +568,14 @@ public class SqliteDb {
 		try {
 			connection = DriverManager.getConnection(url);
 			System.out.println("SQLite DB connected");
-			
-				UserHistory userHistory = new UserHistory();
-				
-				userHistory.setLat(lat);
-				userHistory.setLnt(lnt);
+							
 
-				String sql = " INSERT INTO TB_USER_HISTORY " 
-						+ " ( LAT , LNT )"
-						+ " VALUES " 
-						+ " ( ?, ? ); ";
+				String sql = " DELETE FROM TB_USER_HISTORY " 
+						+ " WHERE"
+						+ " ID = ? ; ";
 
 				preparedStatement = connection.prepareStatement(sql);
-				preparedStatement.setDouble(1, lat);
-				preparedStatement.setDouble(2, lnt);
+				preparedStatement.setInt(1, id);
 				int affected = preparedStatement.executeUpdate();
 
 	            if (affected > 0) {
@@ -700,4 +692,82 @@ public class SqliteDb {
 		}
 		return uhList;
 	}
+	
+	/**
+	 * TB_USER_HISTORY 테이블에 삽입
+	 * 
+	 * @param lat 위도
+	 * @param lnt 경도
+	 */
+	public void InsertDbHistory(double lat, double lnt) {
+		
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+		String url = "jdbc:sqlite:public_wifi.db";
+
+		try {
+			Class.forName("org.sqlite.JDBC");
+		} catch (ClassNotFoundException e) {
+			System.out.println(e.getMessage());
+		}
+
+		try {
+			connection = DriverManager.getConnection(url);
+			System.out.println("SQLite DB connected");
+			
+				UserHistory userHistory = new UserHistory();
+				
+				userHistory.setLat(lat);
+				userHistory.setLnt(lnt);
+
+				String sql = " INSERT INTO TB_USER_HISTORY " 
+						+ " ( LAT , LNT )"
+						+ " VALUES " 
+						+ " ( ?, ? ); ";
+
+				preparedStatement = connection.prepareStatement(sql);
+				preparedStatement.setDouble(1, lat);
+				preparedStatement.setDouble(2, lnt);
+				int affected = preparedStatement.executeUpdate();
+
+	            if (affected > 0) {
+	                System.out.println("성공");
+	            } else {
+	                System.out.println("실패");
+	            }
+
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				if (rs != null && !rs.isClosed()) {
+					rs.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+			try {
+				if (preparedStatement != null && !preparedStatement.isClosed()) {
+					preparedStatement.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+			try {
+				if (connection != null && !connection.isClosed()) {
+					connection.isClosed();
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
+		}
+	}
+
+	
 }

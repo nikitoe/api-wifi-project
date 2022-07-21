@@ -15,6 +15,10 @@ public class HistoryPage {
 		this.userHistoryList = new ArrayList<>();
 	}
 	
+	public boolean isSavedYn() {
+		return savedYn;
+	}
+	
 	public void saveUserHistory(double lat, double lnt) {
 		
 		SqliteDb sqliteDb = new SqliteDb();
@@ -31,7 +35,6 @@ public class HistoryPage {
 		
 		// TB_USER_HISTORY테이블에서 데이터 검색
 		userHistoryList = sqliteDb.selectDbHistory();
-		System.out.println(userHistoryList.get(0).getId());
 		
 		this.savedYn = true;
 		
@@ -39,8 +42,12 @@ public class HistoryPage {
 		
 	}
 	
-	public boolean isSavedYn() {
-		return savedYn;
+	public void deleteUserHistory(int id) {
+		
+		SqliteDb sqliteDb = new SqliteDb();
+		
+		// TB_USER_HISTORY테이블에서 해당 데이터 삭제
+		sqliteDb.deleteDbHistory(id);
 	}
-
+	
 }
