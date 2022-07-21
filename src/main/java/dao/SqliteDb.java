@@ -297,6 +297,7 @@ public class SqliteDb {
 			
 		}
 	}
+	
 	/**
 	 * 해당 데이터 정보들을 담을 데이터베이스 생성
 	 */
@@ -375,7 +376,8 @@ public class SqliteDb {
 	}
 	
 	/**
-	 * 해당 데이터 정보들을 담을 데이터베이스 생성
+	 * TB_PUBLIC_WIFI_INFO에서 모든 와이파이 정보 검색
+	 * @return 모든 와이파이 정보 리스트
 	 */
 	public List<PublicWifiInfo> selectDb() {
 		Connection connection = null;
