@@ -58,8 +58,9 @@ td#initial-value{
 	font-size : 13px;
 	font-weight : bold;
 }
-.delete_button{
-	text-align: center;
+.td-history-style{
+	text-align: left;
+	font-weight: bold;
 }
 </style>
 
@@ -92,7 +93,7 @@ td#initial-value{
     				<th>비고</th>
     			</tr>
     		</thead>
-    		<tbody>
+    		<tbody id="tbody-history-style">
     			<%
     			if(!(hp.isSavedYn())) {
     			%>
@@ -107,10 +108,10 @@ td#initial-value{
 				%>
 				
 				<tr>
-					<td><%=userHistoryList.get(i).getId()%></td>
-					<td><%=userHistoryList.get(i).getLat()%></td>
-					<td><%=userHistoryList.get(i).getLnt()%></td>
-					<td><%=userHistoryList.get(i).getSearchDttm()%></td>
+					<td class="td-history-style"><%=userHistoryList.get(i).getId()%></td>
+					<td class="td-history-style"><%=userHistoryList.get(i).getLat()%></td>
+					<td class="td-history-style"><%=userHistoryList.get(i).getLnt()%></td>
+					<td class="td-history-style"><%=userHistoryList.get(i).getSearchDttm()%></td>
 					<td><button onclick="hrefLink(<%=userHistoryList.get(i).getId()%>)">삭제</button></td>				
 				</tr>
 				

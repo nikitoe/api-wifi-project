@@ -62,6 +62,9 @@ td#initial-value{
 	font-size : 13px;
 	font-weight : bold;
 }
+tr#tr-search-style{;
+	font-weight: bold;
+}
 </style>
 </head>
 <body>
@@ -129,7 +132,7 @@ td#initial-value{
  			<%
 			for (int i=0;i<20;i++){
 			%>
-					<tr>
+					<tr id ="tr-search-style">
 						<td> <%=pwiList.get(i).getDistance()%> </td>
 						<td> <%=pwiList.get(i).getMgr_no()%> </td>
 						<td> <%=pwiList.get(i).getWrdofc()%> </td>
