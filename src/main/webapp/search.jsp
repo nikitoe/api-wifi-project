@@ -1,3 +1,8 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="service.SearchData"%>
+<%@page import="dao.SqliteDb"%>
+<%@page import="dto.PublicWifiInfo"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -59,6 +64,15 @@ td#initial-value{
 </style>
 </head>
 <body>
+	<%
+		SqliteDb sqliteDb = new SqliteDb();
+		SearchData sd = new SearchData();
+		List<PublicWifiInfo> pwiList = new ArrayList<>();
+		double lat = Double.parseDouble(request.getParameter("lat"));
+		double lnt = Double.parseDouble(request.getParameter("lnt"));
+		pwiList = sd.calDistance(lat, lnt);
+		
+	%>
 	<h1>와이파이 정보 구하기</h1>
 	
 	<nav id="navbar">
@@ -110,9 +124,31 @@ td#initial-value{
     			</tr>
     		</thead>
     		<tbody>
-				<tr>
-					<td id="initial-value" colspan='17'>위치 정보를 입력한 후에 조회해 주세요.</td>
-				</tr>
+ 			<%
+			for (int i=0;i<20;i++){
+			%>
+					<tr>
+						<td> <%=pwiList.get(i).getDistance()%> </td>
+						<td> <%=pwiList.get(i).getMgr_no()%> </td>
+						<td> <%=pwiList.get(i).getWrdofc()%> </td>
+						<td> <%=pwiList.get(i).getMain_nm()%> </td>
+						<td> <%=pwiList.get(i).getAdres1()%> </td>
+						<td> <%=pwiList.get(i).getAdres2()%> </td>
+						<td> <%=pwiList.get(i).getInstl_floor()%> </td>
+						<td> <%=pwiList.get(i).getInstl_ty()%> </td>
+						<td> <%=pwiList.get(i).getInstl_mby()%> </td>
+						<td> <%=pwiList.get(i).getSvc_se()%> </td>
+						<td> <%=pwiList.get(i).getCmcwr()%> </td>
+						<td> <%=pwiList.get(i).getCnstc_year()%> </td>
+						<td> <%=pwiList.get(i).getInout_door()%> </td>
+						<td> <%=pwiList.get(i).getRemars3()%> </td>
+						<td> <%=pwiList.get(i).getLat()%> </td>
+						<td> <%=pwiList.get(i).getLnt()%> </td>
+						<td> <%=pwiList.get(i).getWork_dttm()%> </td>
+					</tr>		
+			<%		
+			}
+			%>
     		</tbody>
     	</table>
 	</section>
