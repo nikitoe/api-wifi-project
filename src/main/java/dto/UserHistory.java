@@ -22,7 +22,7 @@ public class UserHistory {
 	}
 
 	public void setLat(double lat) {
-		this.lat = Math.floor((lat*10000000) / 10000000.0);
+		this.lat = (Math.floor(lat*10000000) / 10000000.0);
 	}
 
 	public double getLnt() {
@@ -30,7 +30,7 @@ public class UserHistory {
 	}
 
 	public void setLnt(double lnt) {
-		this.lnt = Math.floor((lnt*10000000) / 10000000.0);
+		this.lnt = (Math.floor(lnt*10000000) / 10000000.0);
 	}
 
 	public String getSearchDttm() {

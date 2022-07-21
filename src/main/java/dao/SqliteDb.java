@@ -624,4 +624,80 @@ public class SqliteDb {
 		}
 	}
 
+	/**
+	 * TB_USER_HISTORY에서 모든 히스토리 정보 검색
+	 * @return 모든 히스토리 정보 리스트
+	 */
+	public List<UserHistory> selectDbHistory() {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+		List<UserHistory> uhList = new ArrayList<>();
+		
+		String urlDb = "jdbc:sqlite:public_wifi.db";
+
+		try {
+			Class.forName("org.sqlite.JDBC");
+		} catch (ClassNotFoundException e) {
+			System.out.println(e.getMessage());
+		}
+
+		try {
+			connection = DriverManager.getConnection(urlDb);
+			System.out.println("SQLite DB connected(SELECT TB_USER_HISTORY)");
+
+			String sql = " SELECT "
+					+ " ID "
+					+ " , LAT "
+					+ " , LNT "
+					+ " , SEARCH_DTTM	"
+					+ " FROM TB_USER_HISTORY "
+					+ "; ";
+
+				preparedStatement = connection.prepareStatement(sql);
+				rs = preparedStatement.executeQuery();
+				
+				while(rs.next()) {
+					
+					UserHistory userHistory = new UserHistory();
+					
+					userHistory.setId(rs.getInt("ID"));
+					userHistory.setLat(rs.getDouble("LAT"));
+					userHistory.setLnt(rs.getDouble("LNT"));
+					userHistory.setSearchDttm(rs.getString("SEARCH_DTTM"));
+					
+					uhList.add(userHistory);
+				}
+	
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				if (rs != null && !rs.isClosed()) {
+					rs.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+			try {
+				if (preparedStatement != null && !preparedStatement.isClosed()) {
+					preparedStatement.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+			try {
+				if (connection != null && !connection.isClosed()) {
+					connection.isClosed();
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
+		}
+		return uhList;
+	}
 }

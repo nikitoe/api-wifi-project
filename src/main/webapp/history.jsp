@@ -1,3 +1,7 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
+<%@page import="dto.UserHistory"%>
+<%@page import="dao.SqliteDb"%>
 <%@page import="service.HistoryPage"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -54,11 +58,18 @@ td#initial-value{
 	font-size : 13px;
 	font-weight : bold;
 }
+.delete_button{
+	text-align: center;
+}
 </style>
+
 </head>
 <body>
 	<%
+		
 		HistoryPage hp = new HistoryPage();
+		List<UserHistory> userHistoryList = new ArrayList<>();
+		userHistoryList= hp.searchUserHistory();
 	%>
 	<h1>와이파이 정보 구하기</h1>
 	
@@ -82,17 +93,31 @@ td#initial-value{
     			</tr>
     		</thead>
     		<tbody>
-    			<%if(!(hp.isSavedYn())) {%>
+    			<%
+    			if(!(hp.isSavedYn())) {
+    			%>
+    			
 				<tr>
 					<td id="initial-value" colspan='17'>위치 정보를 입력한 후에 조회해 주세요.</td>
 				</tr>
-				<%} else {
-					
+				
+				<%
+				} else {
+					for(int i=userHistoryList.size()-1 ; i >= 0 ; i--){
 				%>
+				
 				<tr>
-					<td>
+					<td><%=userHistoryList.get(i).getId()%></td>
+					<td><%=userHistoryList.get(i).getLat()%></td>
+					<td><%=userHistoryList.get(i).getLnt()%></td>
+					<td><%=userHistoryList.get(i).getSearchDttm()%></td>
+					<td><button onclick="hrefLink(<%=userHistoryList.get(i).getId()%>)">삭제</button></td>				
 				</tr>
-				<%} %>
+				
+				<%
+					} 
+				}
+				%>
 
     		</tbody>
     	</table>
