@@ -66,6 +66,23 @@ tr#tr-search-style{;
 	font-weight: bold;
 }
 </style>
+<script>
+function askForCoords(){
+	navigator.geolocation.getCurrentPosition(onGeoOk,onGeoError);
+}
+
+function onGeoOk(position){
+    const lat = position.coords.latitude;
+    const lnt = position.coords.longitude;
+    console.log(lat, lnt)
+    
+    document.getElementById("input-lat").value = lat;
+    document.getElementById("input-lnt").value = lnt;
+}
+function onGeoError(){
+    alert("현재 위치를 찾을 수 없습니다.(허용 버튼을 눌러주세요.)");
+}
+</script>
 </head>
 <body>
 	<%
@@ -89,15 +106,15 @@ tr#tr-search-style{;
 	</nav>
 	
 	<section id="to-insert">
-		<form action="/search.jsp" method="get">
+		<form action="search.jsp" method="get">
 			<span id="lat">
-				LAT: <input type="text" name="lat" required/>
+				LAT: <input id="input-lat" type="text" name="lat" required/>
 			</span>
 			<span id="lnt">
-				, LNT: <input type="text" name="lnt" required/>
+				, LNT: <input id="input-lnt" type="text" name="lnt" required/>
 			</span>
 			<span>
-				<input type="button"  value="내 위치 가져오기"/>
+				<input type="button"  onClick="askForCoords()" value="내 위치 가져오기"/>
 			</span>
 			<span>
 				<input type="submit" value="근처 WIPI 정보 보기"/>
