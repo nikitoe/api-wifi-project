@@ -1,3 +1,4 @@
+<%@page import="service.IndexPage"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -110,6 +111,25 @@ function onGeoOk(position){
 function onGeoError(){
     alert("현재 위치를 찾을 수 없습니다.(허용 버튼을 눌러주세요.)");
 }
+
+function checkWifiApi(){
+	
+	<% 
+	IndexPage indexPage = new IndexPage();
+	int result = indexPage.checkApiWifi();
+	%>	
+	const lat  = document.getElementById("input-lat").value 
+	const lnt = document.getElementById("input-lnt").value
+	
+	const result = "<%=result%>";
+	
+	if(result == 0){
+		alert("Open API 와이파이 정보를 찾을 수 없습니다.");
+		return false;
+	}
+	
+	location.href = "search.jsp?lat="+ lat + "&lnt=" + lnt;
+}
 </script>
 </head>
 <body>
@@ -118,12 +138,11 @@ function onGeoError(){
 		<ul class="navbar__menu">
 	 		<li class="navbar__menu__item"><a href="index.jsp">홈</a></li>
 	 		<li class="navbar__menu__item">| <a href="history.jsp?id=-1">위치 히스토리 목록</a></li>
-	 		<li class="navbar__menu__item">| <a href="load-wifi.jsp">Open API 와이파이 정보가져오기</a></li>
+	 		<li class="navbar__menu__item">| <a href="load-wifi.jsp">Open API 와이파이 정보 가져오기</a></li>
 		</ul>
 	</nav>
 	
 	<section id="to-insert">
-		<form action="search.jsp" method="get">
 			<span id="lat">
 				LAT: <input id="input-lat" type="text" name="lat" value="0.0" onkeypress="return numberOfKey(event)" onkeyup="return deleteHangle(event)" required/>
 			</span>
@@ -134,9 +153,8 @@ function onGeoError(){
 				<input type="button"  onClick="askForCoords()" value="내 위치 가져오기"/>
 			</span>
 			<span>
-				<input type="submit" value="근처 WIPI 정보 보기"/>
+				<input type="button" onclick="checkWifiApi()" value="근처 WIPI 정보 보기"/>
 			</span>
-		</form>
 	</section>
 	
 	<section id="show-table">

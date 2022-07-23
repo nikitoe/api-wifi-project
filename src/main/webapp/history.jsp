@@ -101,7 +101,7 @@ function onGeoError(){
 		<ul class="navbar__menu">
 	 		<li class="navbar__menu__item"><a href="index.jsp">홈</a></li>
 	 		<li class="navbar__menu__item">| <a href="history.jsp?id=-1">위치 히스토리 목록</a></li>
-	 		<li class="navbar__menu__item">| <a href="load-wifi.jsp">Open API 와이파이 정보가져오기</a></li>
+	 		<li class="navbar__menu__item">| <a href="load-wifi.jsp">Open API 와이파이 정보 가져오기</a></li>
 		</ul>
 	</nav>
 	

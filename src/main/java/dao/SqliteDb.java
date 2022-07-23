@@ -69,7 +69,6 @@ public class SqliteDb {
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
 			conn.setRequestProperty("Content-type", "application/xml");
-			System.out.println("Response code: " + conn.getResponseCode()); /* 연결 자체에 대한 확인이 필요하므로 추가합니다. */
 			BufferedReader rd;
 
 			// 서비스코드가 정상이면 200~300사이의 숫자가 나옵니다.
@@ -109,8 +108,6 @@ public class SqliteDb {
 		try {
 			String startIndex = start; // 요청시작위치
 			String endIndex = end; // 요청종료위치
-			System.out.println(startIndex);
-			System.out.println(endIndex);
 			
 			StringBuilder urlBuilder = new StringBuilder(this.apiUrl);
 			urlBuilder.append("/" + URLEncoder.encode(this.authKey, "UTF-8"));
@@ -123,7 +120,6 @@ public class SqliteDb {
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
 			conn.setRequestProperty("Content-type", "application/xml");
-			System.out.println("Response code: " + conn.getResponseCode()); /* 연결 자체에 대한 확인이 필요하므로 추가합니다. */
 			BufferedReader rd;
 
 			// 서비스코드가 정상이면 200~300사이의 숫자가 나옵니다.
@@ -161,7 +157,6 @@ public class SqliteDb {
 		 *  처음 받아온 totalCount(총 데이터 건수)를 이용해 1000단위로 계산
 		 */
 		int total = this.totalCount;	// 총 데이터 건수
-		System.out.println(total);
 		int onePer = 1000; // 한번에 가져올 가져올 단위
 		int divideCount = total / onePer; // 실행 할 총 횟수(몫)
 		int lastPer = total % onePer;// 1000단위가 아닌 나머지 데이터 수
@@ -180,8 +175,6 @@ public class SqliteDb {
 					getWifiAPI(start, end);
 					// 가져온 데이터들의 정보들을 데이터베이스에 삽입
 					insertDb();
-					System.out.println("완료");
-					System.out.println(cnt);
 					break;
 				}
 				start = (1 + i * onePer) + "";
@@ -216,7 +209,6 @@ public class SqliteDb {
 
 		try {
 			connection = DriverManager.getConnection(url);
-			System.out.println("SQLite DB connected");
 			
 			for (int i = 0; i < this.row.size(); i++) {
 				PublicWifiInfo publicWifiInfo = new PublicWifiInfo();
@@ -317,9 +309,7 @@ public class SqliteDb {
 		}
 
 		try {
-			
 			connection = DriverManager.getConnection(urlDb);
-			System.out.println("SQLite DB connected(create database)");
 
 			String sql = " CREATE TABLE IF NOT EXISTS TB_PUBLIC_WIFI_INFO "
 					+ " ( "
@@ -356,7 +346,6 @@ public class SqliteDb {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-
 			try {
 				if (preparedStatement != null && !preparedStatement.isClosed()) {
 					preparedStatement.close();
@@ -364,7 +353,6 @@ public class SqliteDb {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-
 			try {
 				if (connection != null && !connection.isClosed()) {
 					connection.isClosed();
@@ -372,8 +360,7 @@ public class SqliteDb {
 				
 			} catch (SQLException e) {
 				e.printStackTrace();
-			}
-			
+			}	
 		}
 	}
 	
@@ -386,7 +373,6 @@ public class SqliteDb {
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
 		
-
 		String urlDb = "jdbc:sqlite:public_wifi.db";
 
 		try {
@@ -398,7 +384,6 @@ public class SqliteDb {
 		try {
 			
 			connection = DriverManager.getConnection(urlDb);
-			System.out.println("SQLite DB connected(select database)");
 
 			String sql = " SELECT "
 					+ " DISTANCE "
@@ -421,10 +406,8 @@ public class SqliteDb {
 					+ " FROM TB_PUBLIC_WIFI_INFO "
 					+ "; ";
 
-
 				preparedStatement = connection.prepareStatement(sql);
 				rs = preparedStatement.executeQuery();
-				
 				
 				while(rs.next()) {
 					
@@ -450,7 +433,6 @@ public class SqliteDb {
 					
 					PublicWifiInfoList.add(publicWifiInfo);
 				}
-	
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		} finally {
@@ -461,7 +443,6 @@ public class SqliteDb {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-
 			try {
 				if (preparedStatement != null && !preparedStatement.isClosed()) {
 					preparedStatement.close();
@@ -469,12 +450,10 @@ public class SqliteDb {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-
 			try {
 				if (connection != null && !connection.isClosed()) {
 					connection.isClosed();
 				}
-				
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -500,9 +479,7 @@ public class SqliteDb {
 		}
 
 		try {
-			
 			connection = DriverManager.getConnection(urlDb);
-			System.out.println("SQLite DB connected(create database)");
 
 			String sql = " CREATE TABLE IF NOT EXISTS TB_USER_HISTORY "
 					+ " ( "
@@ -526,7 +503,6 @@ public class SqliteDb {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-
 			try {
 				if (preparedStatement != null && !preparedStatement.isClosed()) {
 					preparedStatement.close();
@@ -534,12 +510,10 @@ public class SqliteDb {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-
 			try {
 				if (connection != null && !connection.isClosed()) {
 					connection.isClosed();
 				}
-				
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -557,6 +531,7 @@ public class SqliteDb {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
+		
 		String url = "jdbc:sqlite:public_wifi.db";
 
 		try {
@@ -567,8 +542,6 @@ public class SqliteDb {
 
 		try {
 			connection = DriverManager.getConnection(url);
-			System.out.println("SQLite DB connected");
-							
 
 				String sql = " DELETE FROM TB_USER_HISTORY " 
 						+ " WHERE"
@@ -584,7 +557,6 @@ public class SqliteDb {
 	                System.out.println("실패");
 	            }
 
-
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		} finally {
@@ -595,7 +567,6 @@ public class SqliteDb {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-
 			try {
 				if (preparedStatement != null && !preparedStatement.isClosed()) {
 					preparedStatement.close();
@@ -603,12 +574,10 @@ public class SqliteDb {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-
 			try {
 				if (connection != null && !connection.isClosed()) {
 					connection.isClosed();
 				}
-				
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -636,7 +605,6 @@ public class SqliteDb {
 
 		try {
 			connection = DriverManager.getConnection(urlDb);
-			System.out.println("SQLite DB connected(SELECT TB_USER_HISTORY)");
 
 			String sql = " SELECT "
 					+ " ID "
@@ -671,7 +639,6 @@ public class SqliteDb {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-
 			try {
 				if (preparedStatement != null && !preparedStatement.isClosed()) {
 					preparedStatement.close();
@@ -679,12 +646,10 @@ public class SqliteDb {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-
 			try {
 				if (connection != null && !connection.isClosed()) {
 					connection.isClosed();
 				}
-				
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -704,6 +669,7 @@ public class SqliteDb {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
+		
 		String url = "jdbc:sqlite:public_wifi.db";
 
 		try {
@@ -736,8 +702,6 @@ public class SqliteDb {
 	            } else {
 	                System.out.println("실패");
 	            }
-
-
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		} finally {
@@ -748,7 +712,6 @@ public class SqliteDb {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-
 			try {
 				if (preparedStatement != null && !preparedStatement.isClosed()) {
 					preparedStatement.close();
@@ -765,9 +728,126 @@ public class SqliteDb {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			
 		}
 	}
-
 	
+	/**
+	 * 해당 테이블의 존재 여부 확인
+	 * 
+	 * @param tableName 테이블 이름
+	 * @return 1 존재함, 0 존재하지 않음
+	 */
+	public int checkTable(String tableName) {
+		
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+		int result = 0;
+		
+		String urlDb = "jdbc:sqlite:public_wifi.db";
+
+		try {
+			Class.forName("org.sqlite.JDBC");
+		} catch (ClassNotFoundException e) {
+			System.out.println(e.getMessage());
+		}
+
+		try {
+			connection = DriverManager.getConnection(urlDb);
+
+			String sql = " SELECT COUNT(*) as result "
+					+ " FROM sqlite_master where name = ? ";
+
+				preparedStatement = connection.prepareStatement(sql);
+				preparedStatement.setString(1, tableName);
+				rs = preparedStatement.executeQuery();
+				
+				result = rs.getInt("result");
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				if (rs != null && !rs.isClosed()) {
+					rs.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			try {
+				if (preparedStatement != null && !preparedStatement.isClosed()) {
+					preparedStatement.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			try {
+				if (connection != null && !connection.isClosed()) {
+					connection.isClosed();
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+		
+	}
+	
+	/**
+	 * 해당 테이블의 데이터 존재 여부를 확인
+	 * 
+	 * @param tableName 테이블 이름
+	 * @return 1 존재 함, 0 존재하지 않음
+	 */
+	public int checkSelectValue(String tableName) {
+		
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+		int result = 0;
+		
+		String urlDb = "jdbc:sqlite:public_wifi.db";
+
+		try {
+			Class.forName("org.sqlite.JDBC");
+		} catch (ClassNotFoundException e) {
+			System.out.println(e.getMessage());
+		}
+
+		try {
+			connection = DriverManager.getConnection(urlDb);
+
+			String sql = " SELECT EXISTS (SELECT * FROM TB_PUBLIC_WIFI_INFO) as result ; ";
+
+				preparedStatement = connection.prepareStatement(sql);
+				rs = preparedStatement.executeQuery();
+			
+				result = rs.getInt("result");
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				if (rs != null && !rs.isClosed()) {
+					rs.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			try {
+				if (preparedStatement != null && !preparedStatement.isClosed()) {
+					preparedStatement.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			try {
+				if (connection != null && !connection.isClosed()) {
+					connection.isClosed();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}	
+		return result;
+	}
 }

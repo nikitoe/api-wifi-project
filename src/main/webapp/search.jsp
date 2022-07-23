@@ -1,6 +1,6 @@
 <%@page import="service.HistoryPage"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="service.SearchData"%>
+<%@page import="service.SearchPage"%>
 <%@page import="dao.SqliteDb"%>
 <%@page import="dto.PublicWifiInfo"%>
 <%@page import="java.util.List"%>
@@ -122,14 +122,15 @@ function onGeoError(){
 </head>
 <body>
 	<%
-		SqliteDb sqliteDb = new SqliteDb();
-		SearchData sd = new SearchData();
-		HistoryPage hp = new HistoryPage();
-		List<PublicWifiInfo> pwiList = new ArrayList<>();
-		double lat = Double.parseDouble(request.getParameter("lat"));
-		double lnt = Double.parseDouble(request.getParameter("lnt"));
-		pwiList = sd.calDistance(lat, lnt);
-		hp.saveUserHistory(lat, lnt);
+
+			SqliteDb sqliteDb = new SqliteDb();
+			SearchPage sd = new SearchPage();
+			HistoryPage hp = new HistoryPage();
+			List<PublicWifiInfo> pwiList = new ArrayList<>();
+			double lat = Double.parseDouble(request.getParameter("lat"));
+			double lnt = Double.parseDouble(request.getParameter("lnt"));
+			pwiList = sd.calDistance(lat, lnt);
+			hp.saveUserHistory(lat, lnt);
 	%>
 	<h1>와이파이 정보 구하기</h1>
 	
@@ -137,7 +138,7 @@ function onGeoError(){
 		<ul class="navbar__menu">
 	 		<li class="navbar__menu__item"><a href="index.jsp">홈</a></li>
 	 		<li class="navbar__menu__item">| <a href="history.jsp?id=-1">위치 히스토리 목록</a></li>
-	 		<li class="navbar__menu__item">| <a href="load-wifi.jsp">Open API 와이파이 정보가져오기</a></li>
+	 		<li class="navbar__menu__item">| <a href="load-wifi.jsp">Open API 와이파이 정보 가져오기</a></li>
 		</ul>
 	</nav>
 	

@@ -7,11 +7,11 @@ import java.util.List;
 import dao.SqliteDb;
 import dto.PublicWifiInfo;
 
-public class SearchData {
+public class SearchPage {
 	
 	public final String unit = "kilometer";	// 거리 단위
 	
-	public SearchData() {}
+	public SearchPage() {}
 	
 	/**
 	 * 데이터베이스에 있는 위도, 경도 와 현재 위도, 경도 거리 구하기
