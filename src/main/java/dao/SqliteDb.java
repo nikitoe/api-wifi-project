@@ -551,10 +551,8 @@ public class SqliteDb {
 				preparedStatement.setInt(1, id);
 				int affected = preparedStatement.executeUpdate();
 
-	            if (affected > 0) {
-	                System.out.println("성공");
-	            } else {
-	                System.out.println("실패");
+	            if (affected <= 0) {
+	            	System.out.println("실패");
 	            }
 
 		} catch (Exception e) {
@@ -680,7 +678,6 @@ public class SqliteDb {
 
 		try {
 			connection = DriverManager.getConnection(url);
-			System.out.println("SQLite DB connected");
 			
 				UserHistory userHistory = new UserHistory();
 				
@@ -697,10 +694,8 @@ public class SqliteDb {
 				preparedStatement.setDouble(2, lnt);
 				int affected = preparedStatement.executeUpdate();
 
-	            if (affected > 0) {
-	                System.out.println("성공");
-	            } else {
-	                System.out.println("실패");
+	            if (affected <= 0) {
+	            	 System.out.println("실패");
 	            }
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
