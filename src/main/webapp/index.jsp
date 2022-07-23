@@ -125,10 +125,10 @@ function onGeoError(){
 	<section id="to-insert">
 		<form action="search.jsp" method="get">
 			<span id="lat">
-				LAT: <input id="input-lat" type="text" name="lat" onkeypress="return numberOfKey(event)" onkeyup="return deleteHangle(event)" required/>
+				LAT: <input id="input-lat" type="text" name="lat" value="0.0" onkeypress="return numberOfKey(event)" onkeyup="return deleteHangle(event)" required/>
 			</span>
 			<span id="lnt">
-				, LNT: <input id="input-lnt" type="text" name="lnt" onkeypress="return numberOfKey(event)" onkeyup="return deleteHangle(event)" required/>
+				, LNT: <input id="input-lnt" type="text" name="lnt" value="0.0" onkeypress="return numberOfKey(event)" onkeyup="return deleteHangle(event)" required/>
 			</span>
 			<span>
 				<input type="button"  onClick="askForCoords()" value="내 위치 가져오기"/>
