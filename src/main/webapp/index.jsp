@@ -58,18 +58,55 @@ td#initial-value{
 }
 </style>
 <script>
+// 한글 부분 지우기
+function deleteHangle(evt){
+	const objTarget = evt.srcElement || evt.target;
+	// Textbox 값
+	const _value =  event.srcElement.value;
+	
+	if(/[ㄱ-ㅎㅏ-ㅡ가-핳]/g.test(_value)){
+		objTarget.value = null;	
+	}
+	
+}
+
+// 숫자를 제외한 값을 입력하지 못하게 함
+function numberOfKey(evt){
+	const CharContent = (evt.which) ? evt.which : event.keyCode;
+	// Textbox 값
+	const _value =  event.srcElement.value;
+	
+	// 숫자와 .만 입력 가능
+	if(event.keyCode < 48 || event.keyCode > 57){
+		if(event.keyCode != 46) {
+			return false;
+		}
+	}
+	// 소수점(.)이 두번 이상 나오지 못하게
+	const _pattern0 = /^\d*[.]\d*$/; // 현재 value 값에 소수점(.)이 있으면 .입력 불가
+	
+	if(_pattern0.test(_value)){
+		if(CharContent == 46){
+			return false;
+		}
+	}
+}
+
+// 나의 현재 위치 가져오기
 function askForCoords(){
 	navigator.geolocation.getCurrentPosition(onGeoOk,onGeoError);
 }
 
+// 가져온 현재 위치 값을(위도와 경도) text에 입력
 function onGeoOk(position){
     const lat = position.coords.latitude;
     const lnt = position.coords.longitude;
-    console.log(lat, lnt)
     
     document.getElementById("input-lat").value = lat;
     document.getElementById("input-lnt").value = lnt;
 }
+
+// 에러 발생시 경고(위치 허용/거부 등)
 function onGeoError(){
     alert("현재 위치를 찾을 수 없습니다.(허용 버튼을 눌러주세요.)");
 }
@@ -88,10 +125,10 @@ function onGeoError(){
 	<section id="to-insert">
 		<form action="search.jsp" method="get">
 			<span id="lat">
-				LAT: <input id="input-lat" type="text" name="lat" required/>
+				LAT: <input id="input-lat" type="text" name="lat" onkeypress="return numberOfKey(event)" onkeyup="return deleteHangle(event)" required/>
 			</span>
 			<span id="lnt">
-				, LNT: <input id="input-lnt" type="text" name="lnt" required/>
+				, LNT: <input id="input-lnt" type="text" name="lnt" onkeypress="return numberOfKey(event)" onkeyup="return deleteHangle(event)" required/>
 			</span>
 			<span>
 				<input type="button"  onClick="askForCoords()" value="내 위치 가져오기"/>
