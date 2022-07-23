@@ -10,78 +10,12 @@
 <head>
 <meta charset="UTF-8">
 <title>와이파이 정보 구하기</title>
-<style type="text/css">
-table {
-    width: 100%;
-    border-top: 1px solid #444444;
-    border-collapse: collapse;
-}
-th, td {
-    border: 1px solid #b4b4b4;
-    padding: 10px;
-    text-align: center;
-}
-thead tr {
-    background-color: #00A972;
-    color: #ffffff;
-}
-tbody tr:nth-child(2n) {
-    background-color: #f2f2f2;
-}
-tbody tr:nth-child(2n+1) {
-    background-color: #ffffff;
-}
-
-li {
-	/* 목록 스타일을 제거 */
-	list-style: none;
-}
-
-.navbar__menu {
-	display: flex;
-	padding: 0px 0px;
- 	margin: 0;
-}
-.navbar__menu__item{
-	padding-right: 5px;
-}
-#navbar {
-	padding: 10px 0px;
-}
-
-#show-table{
-	padding: 5px 0px;
-}
-
-
-td#initial-value{
-	font-size : 13px;
-	font-weight : bold;
-}
-.td-history-style{
-	text-align: left;
-	font-weight: bold;
-}
-</style>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/history.css"></link>
 <script>
 function hrefLink(id){
 	const link = 'history.jsp?id='+id;
 	
 	location.href = link;
-}
-function askForCoords(){
-	navigator.geolocation.getCurrentPosition(onGeoOk,onGeoError);
-}
-
-function onGeoOk(position){
-	const lat = position.coords.latitude;
-	const lnt = position.coords.longitude;
-	    
-	document.getElementById("input-lat").value = lat;
-	document.getElementById("input-lnt").value = lnt;
-}
-function onGeoError(){
-	alert("현재 위치를 찾을 수 없습니다.(허용 버튼을 눌러주세요.)");
 }
 </script>
 </head>

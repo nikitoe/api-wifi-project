@@ -1,0 +1,55 @@
+@charset "UTF-8";
+table {
+    width: 100%;
+    border-top: 1px solid #444444;
+    border-collapse: collapse;
+}
+th, td {
+    border: 1px solid #b4b4b4;
+    padding: 10px;
+    text-align: center;
+}
+thead tr {
+    background-color: #00A972;
+    color: #ffffff;
+}
+tbody tr:nth-child(2n) {
+    background-color: #f2f2f2;
+}
+tbody tr:nth-child(2n+1) {
+    background-color: #ffffff;
+}
+
+li {
+	/* 목록 스타일을 제거 */
+	list-style: none;
+}
+
+.navbar__menu {
+	display: flex;
+	padding: 0px 0px;
+ 	margin: 0;
+}
+.navbar__menu__item{
+	padding-right: 5px;
+}
+#navbar {
+	padding: 10px 0px;
+}
+#to-insert{
+	padding: 10px 0px;
+}
+
+#show-table{
+	padding: 5px 0px;
+}
+
+
+td#initial-value{
+	font-size : 13px;
+	font-weight : bold;
+}
+
+tr#tr-search-style{
+	font-weight: bold;
+}

@@ -11,118 +11,12 @@
 <head>
 <meta charset="UTF-8">
 <title>와이파이 정보 구하기</title>
-<style type="text/css">
-table {
-    width: 100%;
-    border-top: 1px solid #444444;
-    border-collapse: collapse;
-}
-th, td {
-    border: 1px solid #b4b4b4;
-    padding: 10px;
-    text-align: center;
-}
-thead tr {
-    background-color: #00A972;
-    color: #ffffff;
-}
-tbody tr:nth-child(2n) {
-    background-color: #f2f2f2;
-}
-tbody tr:nth-child(2n+1) {
-    background-color: #ffffff;
-}
-
-li {
-	/* 목록 스타일을 제거 */
-	list-style: none;
-}
-
-.navbar__menu {
-	display: flex;
-	padding: 0px 0px;
- 	margin: 0;
-}
-.navbar__menu__item{
-	padding-right: 5px;
-}
-#navbar {
-	padding: 10px 0px;
-}
-#to-insert{
-	padding: 10px 0px;
-}
-
-#show-table{
-	padding: 5px 0px;
-}
-
-
-td#initial-value{
-	font-size : 13px;
-	font-weight : bold;
-}
-tr#tr-search-style{;
-	font-weight: bold;
-}
-</style>
-<script>
-function deleteHangle(evt){
-	const objTarget = evt.srcElement || evt.target;
-	// Textbox 값
-	const _value =  event.srcElement.value;
-	
-	if(/[ㄱ-ㅎㅏ-ㅡ가-핳]/g.test(_value)){
-		objTarget.value = null;	
-	}
-	
-}
-
-// 숫자를 제외한 값을 입력하지 못하게 함
-function numberOfKey(evt){
-	const CharContent = (evt.which) ? evt.which : event.keyCode;
-	// Textbox 값
-	const _value =  event.srcElement.value;
-	
-	// 숫자와 .만 입력 가능
-	if(event.keyCode < 48 || event.keyCode > 57){
-		if(event.keyCode != 46) {
-			return false;
-		}
-	}
-	// 소수점(.)이 두번 이상 나오지 못하게
-	const _pattern0 = /^\d*[.]\d*$/; // 현재 value 값에 소수점(.)이 있으면 .입력 불가
-	
-	if(_pattern0.test(_value)){
-		if(CharContent == 46){
-			return false;
-		}
-	}
-}
-
-// 나의 현재 위치 가져오기
-function askForCoords(){
-	navigator.geolocation.getCurrentPosition(onGeoOk,onGeoError);
-}
-
-// 가져온 현재 위치 값을(위도와 경도) text에 입력
-function onGeoOk(position){
-    const lat = position.coords.latitude;
-    const lnt = position.coords.longitude;
-    
-    document.getElementById("input-lat").value = lat;
-    document.getElementById("input-lnt").value = lnt;
-}
-
-// 에러 발생시 경고(위치 허용/거부 등)
-function onGeoError(){
-    alert("현재 위치를 찾을 수 없습니다.(허용 버튼을 눌러주세요.)");
-}
-</script>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/search.css">
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/getcurrentlocation.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/validationrule.js"></script>
 </head>
 <body>
 	<%
-
 			SqliteDb sqliteDb = new SqliteDb();
 			SearchPage sd = new SearchPage();
 			HistoryPage hp = new HistoryPage();
