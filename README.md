@@ -55,14 +55,19 @@
     - index.jsp 페이지에서 Open API 와이파이 정보 가져오기 링크 클릭시 공공 와이파이 정보를 가져올 수 있습니다.
     - 해당 와이파이 정보를 담을 데이터베이스 테이블(TB_PUBLIC_WIFI_INFO)을 생성하고 데이터들을 테이블에 삽입합니다.
     - load-wifi.jsp 페이지에서 가져온 총 데이터 수를 출력합니다.
+    <img width="700px" alt="get_open_wifiAPI" src="https://user-images.githubusercontent.com/36691759/180759695-98046c24-35cf-4adc-9fbc-58b39f990791.gif">
+
 2. **내 위치 정보(위도, 경도) 입력 시, 가까운 위치에 있는 와이파이 정보 저장 및 출력 기능**
     - LAT와 LNT의 input text에 입력후, 근처 WIPI 정보 보기 버튼 클릭시 search.jsp 페이지로 이동한다.
     - 입력한 내위치 정보(위도, 경도)에서 가장 가까운 순으로 공공 와이파이 정보를 20개 출력 합니다.
     - 입력한 내 위치 정보(위도, 경도)를 담을 테이블(TB_USER_HISTORY)을 생성후, 데이터들을 삽입합니다.
+    <img width="700px" alt="serach_wifi" src="https://user-images.githubusercontent.com/36691759/180759022-053846c0-93ad-4626-b004-43014e5fed0a.gif">
+
 3. **위치 히스토리 목록 출력 기능**
     - index.jsp 페이지에서 위치 히스토리 목록 링크를 클릭시 입력한 위치정보들을 가져올 수 있습니다.
     - TB_USER_HISTOR테이블에서 모든 정보를 조회합니다.
     - history.jsp 페이지에서 입력한 위치정보들을 출력합니다.
+    <img width="700px" alt="historyList" src="https://user-images.githubusercontent.com/36691759/180759168-fb12d7b7-d659-4140-86fc-ee2aac2edad8.gif">
 
 **📄부가 기능**
 1. **조회 전 Open API 와이파이 정보 유효성 검사**
