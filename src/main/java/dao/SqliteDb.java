@@ -486,7 +486,7 @@ public class SqliteDb {
 					+ " ID				INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL "
 					+ " ,LAT			REAL    NULL "
 					+ " ,LNT			REAL    NULL "   
-					+ " ,SEARCH_DTTM	TEXT    NULL  DEFAULT CURRENT_TIMESTAMP" 
+					+ " ,SEARCH_DTTM	TEXT    NULL  DEFAULT (datetime('now','localtime')) " 
 					+ " ); ";
 
 				preparedStatement = connection.prepareStatement(sql);
